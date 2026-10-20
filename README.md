@@ -41,3 +41,16 @@ Performed exploratory data analysis on the cleaned Titanic dataset to discover s
 4. **Ticket Fare Outliers:** The fare distribution is heavily right-skewed; IQR analysis detected 116 statistical outliers with extreme luxury prices above $500.
 5. **Correlation Drivers:** A positive correlation (+0.26) between ticket fare and survival confirms economic status as a primary survival determinant.
 6.
+
+---
+
+# Task 3: Interactive Dashboard (Titanic Analysis)
+
+## Dashboard Features
+- **Key Performance Indicators (KPIs):** Total Passengers (891), Survival Rate (38.4%), Average Age (29.1 yrs), Average Fare ($32.20).
+- **Survival by Gender:** Clear breakdown demonstrating higher female survival probability.
+- **Passenger Class Split:** Visual donut chart of passenger volume across 1st, 2nd, and 3rd Class.
+- **Class vs Survival:** Quantitative comparison highlighting strong survival disparity between classes.
+- **Age Distribution & Survival:** Visual density curves comparing age brackets of survivors vs non-survivors.
+- **Interactive File:** `interactive_dashboard.html` contains the full web-based interactive dashboard.
+-
