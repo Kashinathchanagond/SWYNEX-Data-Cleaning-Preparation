@@ -1,0 +1,56 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.set_theme(style="whitegrid")
+
+# 1. Dataset download & clean
+url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+df = pd.read_csv(url)
+df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
+df = df.drop_duplicates()
+df['age'] = df.groupby('pclass')['age'].transform(lambda x: x.fillna(x.median()))
+df['embarked'] = df['embarked'].fillna(df['embarked'].mode()[0])
+if 'cabin' in df.columns:
+    df.drop(columns=['cabin'], inplace=True)
+
+df.to_csv("titanic_cleaned.csv", index=False)
+
+# 2. Summary stats
+print(df.describe())
+
+# 3. Generate and save all 5 charts
+plt.figure()
+sns.barplot(data=df, x='sex', y='survived', errorbar=None)
+plt.title('Survival Rate by Gender')
+plt.savefig('chart1_gender.png')
+plt.close()
+
+plt.figure()
+sns.barplot(data=df, x='pclass', y='survived', errorbar=None)
+plt.title('Survival Rate by Class')
+plt.savefig('chart2_class.png')
+plt.close()
+
+plt.figure()
+sns.kdeplot(data=df[df['survived']==1]['age'], label='Survived', fill=True)
+sns.kdeplot(data=df[df['survived']==0]['age'], label='Not Survived', fill=True)
+plt.title('Age Distribution by Survival')
+plt.legend()
+plt.savefig('chart3_age.png')
+plt.close()
+
+plt.figure()
+sns.boxplot(x=df['fare'])
+plt.title('Fare Outliers Distribution')
+plt.savefig('chart4_fare_outliers.png')
+plt.close()
+
+plt.figure()
+sns.heatmap(df.select_dtypes(include=[np.number]).corr(), annot=True, cmap='coolwarm')
+plt.title('Feature Correlation Matrix')
+plt.savefig('chart5_correlation.png')
+plt.close()
+
+print("ALL FILES GENERATED SUCCESSFULLY!")
